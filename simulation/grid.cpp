@@ -4,6 +4,7 @@
 Grid::Grid(int w, int h) : width(w), height(h) {
   cells.resize(height, std::vector<Cell>(width));
   addOuterWalls();
+  costMap.resize(height, std::vector<int>(width, 255));
 }
 
 void Grid::addOuterWalls() {
@@ -68,4 +69,12 @@ void Grid::print() const {
     }
     std::cout << std::endl;
   }
+}
+
+int Grid::getWidth() const noexcept { return width; }
+int Grid::getHeight() const noexcept { return height; }
+const Cell &Grid::getCell(int row, int col) const { return cells[row][col]; }
+
+const std::vector<std::vector<int>>& Grid::getCostMap() const noexcept {
+  return costMap;
 }

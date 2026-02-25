@@ -31,3 +31,7 @@ void Mouse::turnRight() {
 void Mouse::printPosition() const {
   std::cout << "Mouse at (" << row << ", " << col << ")\n";
 }
+
+int Mouse::getRow() const noexcept { return row; }
+int Mouse::getCol() const noexcept { return col; }
+Direction Mouse::getDirection() const noexcept { return dir; }

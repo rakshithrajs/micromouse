@@ -17,6 +17,10 @@ public:
   void turnRight();
 
   void printPosition() const;
+
+  int getRow() const noexcept;
+  int getCol() const noexcept;
+  Direction getDirection() const noexcept;
 };
 
 #endif

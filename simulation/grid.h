@@ -19,6 +19,7 @@ private:
   int width;
   int height;
   std::vector<std::vector<Cell>> cells;
+  std::vector<std::vector<int>> costMap;
 
 public:
   Grid(int width, int height);
@@ -27,6 +28,11 @@ public:
 
   bool canMove(int x, int y, Direction dir) const;
   void addWall(int x, int y, Direction dir);
+
+  int getWidth() const noexcept;
+  int getHeight() const noexcept;
+  const Cell &getCell(int row, int col) const;
+  const std::vector<std::vector<int>> &getCostMap() const noexcept;
 };
 
 #endif
