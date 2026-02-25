@@ -46,6 +46,26 @@ void Grid::addWall(int row, int col, Direction dir) {
   }
 }
 
+void Grid::removeWall(int row, int col, Direction dir) {
+  if (dir == Direction::NORTH) {
+    cells[row][col].north = false;
+    if (row > 0)
+      cells[row - 1][col].south = false;
+  } else if (dir == Direction::EAST) {
+    cells[row][col].east = false;
+    if (col < width - 1)
+      cells[row][col + 1].west = false;
+  } else if (dir == Direction::SOUTH) {
+    cells[row][col].south = false;
+    if (row < height - 1)
+      cells[row + 1][col].north = false;
+  } else if (dir == Direction::WEST) {
+    cells[row][col].west = false;
+    if (col > 0)
+      cells[row][col - 1].east = false;
+  }
+}
+
 bool Grid::canMove(int row, int col, Direction dir) const {
   if (dir == Direction::NORTH)
     return !cells[row][col].north;
@@ -75,6 +95,10 @@ int Grid::getWidth() const noexcept { return width; }
 int Grid::getHeight() const noexcept { return height; }
 const Cell &Grid::getCell(int row, int col) const { return cells[row][col]; }
 
-const std::vector<std::vector<int>>& Grid::getCostMap() const noexcept {
+const std::vector<std::vector<int>> &Grid::getCostMap() const noexcept {
+  return costMap;
+}
+
+std::vector<std::vector<int>> &Grid::getMutableCostMap() noexcept {
   return costMap;
 }

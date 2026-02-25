@@ -20,10 +20,22 @@ public:
   const Mouse &getMouse() const noexcept;
 
   void enqueueCommand(Command cmd);
+
+  void startFloodFill(int goalRow, int goalCol);
+  void floodStep();
+
+  void startNavigation() { navigateActive = true; }
+  void stopNavigation() { navigateActive = false; }
+
+  void navigateStep();
+
 private:
   Grid grid;
   Mouse mouse;
   std::queue<Command> commandQueue;
+  std::queue<std::pair<int, int>> floodQueue;
+  bool floodActive = false;
+  bool navigateActive = false;
 };
 
 #endif

@@ -25,6 +25,19 @@ void MainWindow::paintEvent(QPaintEvent *) {
   int cols = grid.getWidth();
   int cellSize = width() / cols;
 
+  const auto &costMap = grid.getCostMap();
+
+  for (int r = 0; r < rows; ++r) {
+    for (int c = 0; c < cols; ++c) {
+
+      int cost = costMap[r][c];
+      int shade = std::min(cost * 3, 255);
+
+      painter.fillRect(c * cellSize, r * cellSize, cellSize, cellSize,
+                       QColor(255 - shade, 255 - shade, 255));
+    }
+  }
+
   int cx = cols * cellSize + cellSize / 2;
   int cy = rows * cellSize + cellSize / 2;
 
@@ -100,19 +113,6 @@ void MainWindow::paintEvent(QPaintEvent *) {
 
   painter.setBrush(Qt::black);
   painter.drawPolygon(arrow);
-
-  const auto &costMap = grid.getCostMap();
-
-  for (int r = 0; r < rows; ++r) {
-    for (int c = 0; c < cols; ++c) {
-
-      int cost = costMap[r][c];
-      int shade = std::min(cost * 10, 255);
-
-      painter.fillRect(c * cellSize, r * cellSize, cellSize, cellSize,
-                       QColor(255 - shade, 255 - shade, 255));
-    }
-  }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -144,6 +144,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
       simulator->step();
       update();
     }
+    break;
+  case Qt::Key_F:
+    simulator->startFloodFill(7, 7);
+    break;
+  case Qt::Key_G:
+    simulator->startNavigation();
     break;
   }
 
